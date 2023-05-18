@@ -3,6 +3,7 @@ package com.bootcamp.navigationdrawerswitchtheme
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -116,7 +117,7 @@ fun MyNavDrawerApp() {
                 contentAlignment = Alignment.Center,
 
             ) {
-                Text(stringResource(R.string.hello_world))
+
             }
         }
     }
@@ -133,7 +134,8 @@ fun MyTopBar(onMenuClick: () -> Unit) {
     val colors = MaterialTheme.colorScheme
 
     TopAppBar(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primary),
 
 
