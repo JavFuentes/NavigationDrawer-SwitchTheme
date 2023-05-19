@@ -3,7 +3,7 @@
 
 En esta aplicación, se implementa un Modal Navigation Drawer (menú de navegación lateral) y un botón de cambio para alternar entre los temas claro y oscuro, utilizando Material 3.
 Este es un ejemplo de aplicación Android utilizando Jetpack Compose. 
-![NavigationDrawer SwitchTheme](https://github.com/JavFuentes/NavigationDrawer-SwitchTheme/assets/122236197/d0ae57ec-47e5-465a-ae0a-047c7957d0f9)
+![NavigationDrawer SwitchTheme](https://github.com/JavFuentes/NavigationDrawer-SwitchTheme/assets/122236197/6be4e811-c14b-4838-b6b0-7106e517604d)
 ## Funcionalidades
 - **Navigation Drawer**: Menú de navegación lateral que se puede abrir y cerrar.
 - **Switch Theme**: Un botón de cambio en la barra de navegación superior que permite al usuario cambiar entre los temas claro y oscuro.
