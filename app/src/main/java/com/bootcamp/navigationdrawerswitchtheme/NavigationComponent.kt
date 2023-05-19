@@ -54,6 +54,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -155,7 +156,7 @@ fun MyTopBar(
                 Icon(
                     imageVector = Icons.Default.Menu,
                     contentDescription = stringResource(R.string.menu),
-                    tint = colors.primary,
+                    tint = colors.onPrimary,
                 )
             }
         },
@@ -167,7 +168,8 @@ fun MyTopBar(
             ) {
                 Text(
                     text = stringResource(R.string.app_name),
-                    color = colors.primary,
+                    color = colors.onPrimary,
+                    fontSize = 20.sp
                 )
 
                 Switch(

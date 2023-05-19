@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NavigationDrawer</string>
+    <string name="app_name">NavigationDrawer SwitchTheme</string>
     <string name="body_text">Hello World</string>
     <string name="menu">Menu</string>
     <string name="hello_from_nav_drawer">Hello From Navigation Drawer</string>
