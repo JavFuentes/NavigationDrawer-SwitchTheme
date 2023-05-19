@@ -3,7 +3,6 @@ package com.bootcamp.navigationdrawerswitchtheme
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -41,13 +40,12 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -55,16 +53,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bootcamp.navigationdrawerswitchtheme.ui.theme.NavigationDrawerSwitchThemeTheme
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyNavDrawerApp() {
+fun MyNavDrawerApp(isDarkTheme: MutableState<Boolean>) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -108,12 +104,17 @@ fun MyNavDrawerApp() {
             },
             topBar = {
                 MyTopBar(
+                    isDarkTheme = isDarkTheme.value,
                     onMenuClick = {
                         scope.launch {
                             drawerState.open()
                         }
                     },
+                    onSwitchToggle = { isChecked ->
+                        isDarkTheme.value = isChecked
+                    }
                 )
+
             },
         ) { paddingValues ->
             Box(
@@ -122,7 +123,7 @@ fun MyNavDrawerApp() {
                     .padding(paddingValues),
                 contentAlignment = Alignment.Center,
 
-            ) {
+                ) {
 
             }
         }
@@ -136,11 +137,12 @@ fun MyNavDrawerApp() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTopBar(onMenuClick: () -> Unit) {
+fun MyTopBar(
+    isDarkTheme: Boolean,
+    onMenuClick: () -> Unit,
+    onSwitchToggle: (Boolean) -> Unit
+) {
     val colors = MaterialTheme.colorScheme
-
-    // Agrega esto para manejar el estado del switch
-    var isSwitchChecked by remember { mutableStateOf(false) }
 
     TopAppBar(
         modifier = Modifier
@@ -168,10 +170,11 @@ fun MyTopBar(onMenuClick: () -> Unit) {
                     color = colors.primary,
                 )
 
-                // Agrega el switch a la AppBar
                 Switch(
-                    checked = isSwitchChecked,
-                    onCheckedChange = { isSwitchChecked = it },
+                    checked = isDarkTheme,
+                    onCheckedChange = { isChecked ->
+                        onSwitchToggle(isChecked)
+                    },
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = MaterialTheme.colorScheme.secondary,
                         uncheckedThumbColor = MaterialTheme.colorScheme.tertiary
@@ -181,10 +184,6 @@ fun MyTopBar(onMenuClick: () -> Unit) {
         },
     )
 }
-
-
-
-
 
 data class MenuItem(val title: String, val icon: ImageVector)
 
@@ -260,7 +259,6 @@ fun BackPressHandler(enabled: Boolean = true, onBackPressed: () -> Unit) {
             }
         }
     }
-
     SideEffect {
         backCallback.isEnabled = enabled
     }
@@ -278,10 +276,3 @@ fun BackPressHandler(enabled: Boolean = true, onBackPressed: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    NavigationDrawerSwitchThemeTheme() {
-        MyNavDrawerApp()
-    }
-}
