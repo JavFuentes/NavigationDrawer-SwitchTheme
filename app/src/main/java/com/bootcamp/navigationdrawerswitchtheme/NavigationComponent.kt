@@ -1,8 +1,10 @@
 package com.bootcamp.navigationdrawerswitchtheme
 
+import android.graphics.Paint.Style
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,15 +51,19 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.time.format.TextStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -125,7 +131,11 @@ fun MyNavDrawerApp(isDarkTheme: MutableState<Boolean>) {
                 contentAlignment = Alignment.Center,
 
                 ) {
-
+                Image(
+                    painter = painterResource(R.drawable.symmetric_fox),
+                    contentDescription = "Mi imagen",
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onTertiary)
+                )
             }
         }
     }
@@ -169,7 +179,8 @@ fun MyTopBar(
                 Text(
                     text = stringResource(R.string.app_name),
                     color = colors.onPrimary,
-                    fontSize = 20.sp
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
                 )
 
                 Switch(
@@ -217,7 +228,7 @@ fun MyDrawerContent(
                 modifier = Modifier
                     .height(190.dp)
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.primary),
+                    .background(MaterialTheme.colorScheme.primary),//
             )
             LazyColumn {
                 items(menu) { menuList ->
@@ -226,6 +237,7 @@ fun MyDrawerContent(
                         label = {
                             Text(
                                 text = menuList.title,
+
                                 style = MaterialTheme.typography.labelMedium,
                             )
                         },
@@ -234,7 +246,7 @@ fun MyDrawerContent(
                             Icon(
                                 imageVector = menuList.icon,
                                 contentDescription = menuList.title,
-                                tint = Color.DarkGray,
+                                tint = MaterialTheme.colorScheme.onPrimary,
                             )
                         },
                         onClick = {
